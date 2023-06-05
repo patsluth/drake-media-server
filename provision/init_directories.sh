@@ -1,26 +1,25 @@
 #!/bin/bash
-# The script creates folder structure required by he compose file.
+
+set -o allexport
+source .env set
+set +o allexport
 
 # Declare the directories
-dirs=(
-  "content/media/movies favorite"
-  "content/media/movies"
-  "content/media/music"
-  "content/media/tv"
-  "content/torrents/movies"
-  "content/torrents/music"
-  "content/torrents/tv"
-  "content/usenet/movies"
-  "content/usenet/music"
-  "content/usenet/tv"
-  "provision"
+DIRS=(
+  "$CONTENT_DIR/media/movies"
+  "$CONTENT_DIR/media/music"
+  "$CONTENT_DIR/media/tv"
+  "$CONTENT_DIR/torrents/movies"
+  "$CONTENT_DIR/torrents/music"
+  "$CONTENT_DIR/torrents/tv"
+  "$PROVISION_DIR"
 )
 
 # Loop over the directories
-for dir in "${dirs[@]}"; do
+for DIR in "${DIRS[@]}"; do
   # Create the directory
-  mkdir -p "$dir"
+  mkdir -p "$DIR"
 
-  # Create the .gitkeep file
-  touch "$dir/.gitkeep"
+  # # Create the .gitkeep file
+  touch "$DIR/.gitkeep"
 done

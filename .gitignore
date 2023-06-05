@@ -1,4 +1,4 @@
-# Ignore all files in the content directory
+.env
 
 content/*
 
@@ -14,3 +14,8 @@ provision/sonarr/*
 provision/radarr/*
 provision/plex/*
 
+# workspace files are user-specific
+*.sublime-workspace
+**/*.code-workspace
+**/.vscode
+.idea/

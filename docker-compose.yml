@@ -2,31 +2,31 @@ version: '3.9'
 
 services:
 
-  plex:
-    image: plexinc/pms-docker
-    container_name: plex
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - VERSION=docker
-      - HOSTNAME=”PlexServer”
-    volumes:
-      - ./provision/plex:/config
-      - ./content/media:/data/media
-    network_mode: host
-    # ports: # when network: bridge
-    #   - "32400:32400/tcp" 
-    #   - "8324:8324/tcp" # Required if network: bridge
-    #   - "32469:32469/tcp" # Required if network: bridge
-    #   - "1900:1900/udp" # Required if network: bridge
-    #   - "32410:32410/udp" # Required if network: bridge
-    #   - "32412:32412/udp" # Required if network: bridge
-    #   - "32413:32413/udp" # Required if network: bridge
-    #   - "32414:32414/udp" # Required if network: bridge
-    privileged: true # libusb_init failed
-    restart: unless-stopped
-    # networks:
-    #   - media-network
+  # plex:
+  #   image: plexinc/pms-docker
+  #   container_name: plex
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - VERSION=docker
+  #     - HOSTNAME=”PlexServer”
+  #   volumes:
+  #     - ${PROVISION_DIR}/plex:/config
+  #     - ${CONTENT_DIR}/media:/data/media
+  #   network_mode: host
+  #   # ports: # when network: bridge
+  #   #   - "32400:32400/tcp"
+  #   #   - "8324:8324/tcp" # Required if network: bridge
+  #   #   - "32469:32469/tcp" # Required if network: bridge
+  #   #   - "1900:1900/udp" # Required if network: bridge
+  #   #   - "32410:32410/udp" # Required if network: bridge
+  #   #   - "32412:32412/udp" # Required if network: bridge
+  #   #   - "32413:32413/udp" # Required if network: bridge
+  #   #   - "32414:32414/udp" # Required if network: bridge
+  #   privileged: true # libusb_init failed
+  #   restart: unless-stopped
+  #   # networks:
+  #   #   - drake-media-network
 
   radarr:
     image: linuxserver/radarr
@@ -34,15 +34,15 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/Sofia
+      - TZ=America/Edmonton
     volumes:
-      - ./provision/radarr:/config
-      - ./content:/data
+      - ${PROVISION_DIR}/radarr:/config
+      - ${CONTENT_DIR}:/data
     ports:
       - "7878:7878"
     restart: unless-stopped
     networks:
-      - media-network
+      - drake-media-network
 
   sonarr:
     image: linuxserver/sonarr
@@ -50,31 +50,31 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/Sofia
+      - TZ=America/Edmonton
     volumes:
-      - ./provision/sonarr:/config
-      - ./content:/data
+      - ${PROVISION_DIR}/sonarr:/config
+      - ${CONTENT_DIR}:/data
     ports:
       - "8989:8989"
     restart: unless-stopped
     networks:
-      - media-network
+      - drake-media-network
 
-  lidarr:
-    image: linuxserver/lidarr
-    container_name: lidarr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Sofia
-    volumes:
-      - ./provision/lidarr:/config
-      - ./content:/data
-    ports:
-      - "8686:8686"
-    restart: unless-stopped
-    networks:
-      - media-network
+  # lidarr:
+  #   image: linuxserver/lidarr
+  #   container_name: lidarr
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=America/Edmonton
+  #   volumes:
+  #     - ${PROVISION_DIR}/lidarr:/config
+  #     - ${CONTENT_DIR}:/data
+  #   ports:
+  #     - "8686:8686"
+  #   restart: unless-stopped
+  #   networks:
+  #     - drake-media-network
 
   prowlarr:
     image: linuxserver/prowlarr
@@ -82,30 +82,30 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/Sofia
+      - TZ=America/Edmonton
     volumes:
-      - ./provision/prowlarr:/config
+      - ${PROVISION_DIR}/prowlarr:/config
     ports:
       - 9696:9696
     restart: unless-stopped
     networks:
-      - media-network
+      - drake-media-network
 
-  bazarr:
-    image: linuxserver/bazarr
-    container_name: bazarr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Sofia
-    volumes:
-      - ./provision/bazarr:/config
-      - ./content:/data
-    ports:
-      - "6767:6767"
-    restart: unless-stopped
-    networks:
-      - media-network
+  # bazarr:
+  #   image: linuxserver/bazarr
+  #   container_name: bazarr
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=America/Edmonton
+  #   volumes:
+  #     - ${PROVISION_DIR}/bazarr:/config
+  #     - ${CONTENT_DIR}:/data
+  #   ports:
+  #     - "6767:6767"
+  #   restart: unless-stopped
+  #   networks:
+  #     - drake-media-network
 
   qbittorrent:
     image: linuxserver/qbittorrent
@@ -113,62 +113,63 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Europe/Sofia
+      - TZ=America/Edmonton
     volumes:
-      - ./provision/qbittorrent:/config
-      - ./content/torrents:/data/torrents
+      - ${PROVISION_DIR}/qbittorrent:/config
+      - ${CONTENT_DIR}/torrents:/downloads
     ports:
-      - "8080:8080"
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
     restart: unless-stopped
     networks:
-      - media-network
+      - drake-media-network
 
-  jackett:
-    image: linuxserver/jackett
-    container_name: jackett
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Sofia
-    volumes:
-      - ./provision/jackett:/config
-    ports:
-      - "9117:9117"
-    restart: unless-stopped
-    networks:
-      - media-network
+  # jackett:
+  #   image: linuxserver/jackett
+  #   container_name: jackett
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=America/Edmonton
+  #   volumes:
+  #     - ${PROVISION_DIR}/jackett:/config
+  #   ports:
+  #     - "9117:9117"
+  #   restart: unless-stopped
+  #   networks:
+  #     - drake-media-network
 
-  ombi:
-    image: linuxserver/ombi
-    container_name: ombi
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Sofia
-    volumes:
-      - ./provision/ombi:/config
-    ports:
-      - "3579:3579"
-    restart: unless-stopped
-    networks:
-      - media-network
+  # ombi:
+  #   image: linuxserver/ombi
+  #   container_name: ombi
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=America/Edmonton
+  #   volumes:
+  #     - ${PROVISION_DIR}/ombi:/config
+  #   ports:
+  #     - "3579:3579"
+  #   restart: unless-stopped
+  #   networks:
+  #     - drake-media-network
 
-  heimdall:
-    image: linuxserver/heimdall
-    container_name: heimdall
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Sofia
-    volumes:
-      - ./provision/heimdall:/config
-    ports:
-      - "80:80"
-      - "443:443"
-      # - "8083:80"
-    restart: unless-stopped
-    networks:
-      - media-network
-
+  # heimdall:
+  #   image: linuxserver/heimdall
+  #   container_name: heimdall
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=America/Edmonton
+  #   volumes:
+  #     - ${PROVISION_DIR}/heimdall:/config
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #     # - "8083:80"
+  #   restart: unless-stopped
+  #   networks:
+  #     - drake-media-network
 networks:
-  media-network:
+  drake-media-network:

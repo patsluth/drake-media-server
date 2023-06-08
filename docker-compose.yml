@@ -116,7 +116,7 @@ services:
       - TZ=America/Edmonton
     volumes:
       - ${PROVISION_DIR}/qbittorrent:/config
-      - ${CONTENT_DIR}/torrents:/downloads
+      - ${CONTENT_DIR}/torrents:/data/torrents
     ports:
       - 8080:8080
       - 6881:6881

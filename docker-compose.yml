@@ -91,6 +91,24 @@ services:
     networks:
       - drake-media-network
 
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_HTML=${LOG_HTML:-false}
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+      - TZ=America/Edmonton
+    volumes:
+      - ${PROVISION_DIR}/flaresolverr:/config
+    ports:
+      - "${PORT:-8191}:8191"
+    restart: unless-stopped
+    networks:
+      - drake-media-network
+
   # bazarr:
   #   image: linuxserver/bazarr
   #   container_name: bazarr

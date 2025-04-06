@@ -13,6 +13,7 @@ provision/lidarr/*
 provision/sonarr/*
 provision/radarr/*
 provision/plex/*
+provision/flood/*
 
 # workspace files are user-specific
 *.sublime-workspace

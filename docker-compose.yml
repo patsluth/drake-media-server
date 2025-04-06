@@ -132,6 +132,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Edmonton
+      - DOCKER_MODS=ghcr.io/vuetorrent/vuetorrent-lsio-mod:latest
     volumes:
       - ${PROVISION_DIR}/qbittorrent:/config
       - ${CONTENT_DIR}/torrents:/data/torrents

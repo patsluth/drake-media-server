@@ -1,4 +1,5 @@
 .env
+gluetun-control-server-config.toml
 
 content/*
 
@@ -6,6 +7,7 @@ content/*
 provision/heimdall/*
 provision/ombi/*
 provision/jackett/*
+provision/gluetun/*
 provision/qbittorrent/*
 provision/bazarr/*
 provision/prowlarr/*

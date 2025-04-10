@@ -264,3 +264,33 @@ services:
   #   restart: unless-stopped
   #   networks:
   #     - drake-media-network
+
+  myanonamouse:
+    build: context/myanonamouse
+    container_name: myanonamouse
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Edmonton
+      - MAM_ID=${MAM_ID}
+      - RECHECK_TIME=21600 # 6 hours
+    restart: unless-stopped
+    network_mode: "service:gluetun"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "-H",
+          "Authorization: $GLUETUN_CONTROL_SERVER_AUTH_KEY",
+          "-s",
+          "http://localhost:8000/v1/openvpn/status",
+          "|",
+          "grep",
+          "-q",
+          '{"status":"running"}',
+        ]
+      interval: 60s
+      timeout: 10s
+      retries: 5
+      start_period: 15s

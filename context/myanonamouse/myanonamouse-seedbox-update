@@ -2,9 +2,9 @@
 
 update_dynamic_seedbox() {
     echo "Updating Dynamic Seedbox MAM_ID=$MAM_ID"
-    curl -s -b "mam_id=$MAM_ID" -o ~/myanonamouse-dynamicSeedbox-result.txt \
+    curl -s -b "mam_id=$MAM_ID" -o /tmp/myanonamouse-dynamicSeedbox-result.txt \
         https://t.myanonamouse.net/json/dynamicSeedbox.php 2>/dev/null 2>&1
-    cat ~/myanonamouse-dynamicSeedbox-result.txt
+    echo $(cat /tmp/myanonamouse-dynamicSeedbox-result.txt)
 
     sleep $RECHECK_TIME
 

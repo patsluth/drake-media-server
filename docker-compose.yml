@@ -138,7 +138,7 @@ services:
   #     - gluetun
 
   gluetun-qbittorrent-port-manager:
-    image: patrickaclark/gluetun-qbittorrent-port-manager:latest
+    image: andaplays/gluetun-qbittorrent-port-manager:latest
     container_name: gluetun-qbittorrent-port-manager
     restart: unless-stopped
     volumes:
@@ -157,6 +157,8 @@ services:
       - GLUETUN_PORT=8000
       - RECHECK_TIME=60
       - GLUETUN_CONTROL_SERVER_AUTH_KEY=${GLUETUN_CONTROL_SERVER_AUTH_KEY}
+      - CONTROL_SERVER_URL:http://localhost:8000
+      - VPNMODE:OPENVPN
     network_mode: "service:gluetun"
     depends_on:
       - gluetun
@@ -273,7 +275,7 @@ services:
       - PGID=1000
       - TZ=America/Edmonton
       - MAM_ID=${MAM_ID}
-      - RECHECK_TIME=21600 # 6 hours
+      - RECHECK_TIME=10800 # 3 hours
     restart: unless-stopped
     network_mode: "service:gluetun"
     healthcheck:

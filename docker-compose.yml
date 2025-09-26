@@ -1,34 +1,34 @@
 version: "3.9"
 
 services:
-  # plex:
-  #   image: linuxserver/plex
-  #   container_name: plex
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     # - PLEX_UID=1000
-  #     # - PLEX_GID=1000
-  #     # - CHANGE_CONFIG_DIR_OWNERSHIP=false
-  #     - TZ=America/Edmonton
-  #     - VERSION=docker
-  #     # - HOSTNAME=”PlexServer”
-  #   volumes:
-  #     - ${PROVISION_DIR}/plex/config:/config
-  #     - ${PROVISION_DIR}/plex/media:/data
-  #     - ${PROVISION_DIR}/plex/transcode:/transcode
-  #   network_mode: host
-  #   ports: # when network: bridge
-  #     - 32400:32400
-  #   #   - "8324:8324/tcp" # Required if network: bridge
-  #   #   - "32469:32469/tcp" # Required if network: bridge
-  #   #   - "1900:1900/udp" # Required if network: bridge
-  #   #   - "32410:32410/udp" # Required if network: bridge
-  #   #   - "32412:32412/udp" # Required if network: bridge
-  #   #   - "32413:32413/udp" # Required if network: bridge
-  #   #   - "32414:32414/udp" # Required if network: bridge
-  #   # privileged: true # libusb_init failed
-  #   restart: unless-stopped
+  plex:
+    image: linuxserver/plex
+    container_name: plex
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+      - TZ=America/Edmonton
+      # - PLEX_CLAIM=paste_your_claim_code_here
+      # - CHANGE_CONFIG_DIR_OWNERSHIP=false
+      # - HOSTNAME=”PlexServer”
+    volumes:
+      - ${PROVISION_DIR}/plex/config:/config
+      - ${CONTENT_DIR}:/data
+      # - ${PROVISION_DIR}/plex/media:/data
+      # - ${PROVISION_DIR}/plex/transcode:/transcode
+    network_mode: host
+    ports: # when network: bridge
+      - 32400:32400
+    #   - "8324:8324/tcp" # Required if network: bridge
+    #   - "32469:32469/tcp" # Required if network: bridge
+    #   - "1900:1900/udp" # Required if network: bridge
+    #   - "32410:32410/udp" # Required if network: bridge
+    #   - "32412:32412/udp" # Required if network: bridge
+    #   - "32413:32413/udp" # Required if network: bridge
+    #   - "32414:32414/udp" # Required if network: bridge
+    # privileged: true # libusb_init failed
+    restart: unless-stopped
 
   gluetun:
     container_name: gluetun

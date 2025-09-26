@@ -27,7 +27,7 @@ services:
     #   - "32412:32412/udp" # Required if network: bridge
     #   - "32413:32413/udp" # Required if network: bridge
     #   - "32414:32414/udp" # Required if network: bridge
-    # privileged: true # libusb_init failed
+    privileged: true # libusb_init failed
     restart: unless-stopped
 
   gluetun:
